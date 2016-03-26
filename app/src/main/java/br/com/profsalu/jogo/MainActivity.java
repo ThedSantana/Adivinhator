@@ -20,10 +20,13 @@ public class MainActivity extends AppCompatActivity {
     TextView tentativas_txt;
     TextView historico_txt;
     Button botao_btn;
+
     //Armazenara o numero sorteado
     Integer sorteio;
+
     //Contabiliza os erros do jogador
     Integer tentativas = 0;
+
     //Armazena os numeros errados inseridos pelo jogador
     String historico = "";
 
@@ -46,17 +49,18 @@ public class MainActivity extends AppCompatActivity {
         //Exibe o numero sorteado
         //Toast.makeText(MainActivity.this, Integer.toString(sorteio), Toast.LENGTH_LONG).show();
 
+        //Adicionando o evento de click no botao JOGAR
         botao_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Convertendo o numero digitado para inteiro.
 
-
-
+                //Verifica se tem algo digitado na view entrada_txt
                 if (!entrada_txt.getText().toString().equals("")) {
+                    //Converte esse valor para inteiro
                     Integer numeroDigitado = Integer.parseInt(entrada_txt.getText().toString());
 
-                    if(testaNumeroDigitado(numeroDigitado)) {
+                    //Testa se o numero digitado e valido
+                    if(testaNumeroDigitado(numeroDigitado) == true) {
 
 
                         if (numeroDigitado > sorteio) {
@@ -99,22 +103,29 @@ public class MainActivity extends AppCompatActivity {
                                     "Parabens você acertou!",
                                     Toast.LENGTH_SHORT).show();
 
+                            //Cria uma caixa de dialogo, onde o jogador pode escolher entre uma nova partida ou o fim do jogo
                             confirm = new AlertDialog.Builder(MainActivity.this);
 
                             confirm.setTitle("Parabéns!");
                             confirm.setMessage("Deseja jogar de novo? ");
+
+                            //Nova partida
                             confirm.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     resetGame();
                                 }
                             });
+
+                            //Fim do jogo
                             confirm.setNegativeButton("Não", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     finish();
                                 }
                             });
+
+                            //Exibe a caixa de dialogo
                             confirm.show();
 
                         }
@@ -123,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                         entrada_txt.setText("");
                     }
                 }else{
-                    Toast.makeText(MainActivity.this, "Número inválido! \nDigite um valor entre 0 e 100", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Digite um valor entre 0 e 100", Toast.LENGTH_SHORT).show();
                     entrada_txt.setText("");
                 }
             }
@@ -143,10 +154,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Funcao que sorteia um numero inteiro entre 0 e 100
     private Integer sorteiaNumero() {
         return (int) (Math.random() * 100);
     }
 
+    //Funcao que reinicia a partida do zero
     private void resetGame() {
         entrada_txt.setText("");
         historico_txt.setText("");
@@ -155,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
         sorteio = sorteiaNumero();
     }
 
+    //Funcao que verifica se o numero digitado esta na faixa de valores permitida
     private Boolean testaNumeroDigitado(Integer numero) {
         if (numero >= 0 && numero <= 100) {
             return true;
