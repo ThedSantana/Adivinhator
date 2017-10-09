@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Criando as variaveis que receberam as views
+    //Criando as variaveis que receberão as views
     EditText entrada_txt;
     TextView tentativas_txt;
     TextView historico_txt;
